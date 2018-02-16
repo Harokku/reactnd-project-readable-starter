@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import CategoriesList from "./containers/CategoriesList";
+import PostsList from "./containers/PostsList";
+
 class App extends Component {
   render() {
     return (
@@ -13,6 +16,11 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <hr />
+
+        <CategoriesList />
+
+        <PostsList />
       </div>
     );
   }
