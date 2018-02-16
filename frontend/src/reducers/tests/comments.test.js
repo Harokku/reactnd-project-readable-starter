@@ -95,9 +95,48 @@ describe('Comments reducer', () => {
       ])
   })
 
+  it('Should handle RECEIVE_COMMENTS_FOR_POST (not null state)', () => {
+    expect(comments(prevState, {
+      type: RECEIVE_COMMENTS_FOR_POST,
+      comments:[
+        {
+          authos: "thingone",
+          body: "Comments. Are. Cool.",
+          deleted: false,
+          id: "8tu4bsun805n8un48ve89",
+          parentDeleted: false,
+          parentId: "8xf0y6ziyjabvozdd253nd",
+          timestamp: 1469479767190,
+          voteScore: -5,
+        }]
+      }))
+      .toEqual([
+        {
+          author: "thingtwo",
+          body: "Hi there! I am a COMMENT.",
+          deleted: false,
+          id: "894tuq4ut84ut8v4t8wun89g",
+          parentDeleted: false,
+          parentId: "8xf0y6ziyjabvozdd253nd",
+          timestamp: 1468166872634,
+          voteScore: 6,
+        },
+        {
+          authos: "thingone",
+          body: "Comments. Are. Cool.",
+          deleted: false,
+          id: "8tu4bsun805n8un48ve89",
+          parentDeleted: false,
+          parentId: "8xf0y6ziyjabvozdd253nd",
+          timestamp: 1469479767190,
+          voteScore: -5,
+        }
+      ])
+  })
+
   it('Should handle ADD_COMMENT', () => {
     expect(comments(prevState, {
-      type: ADD_COMMENT,
+      type:ADD_COMMENT,
       comment:
         {
           authos: "thingone",
@@ -109,7 +148,7 @@ describe('Comments reducer', () => {
           timestamp: 1469479767190,
           voteScore: -5,
         }
-    }))
+      }))
       .toEqual([
         {
           author: "thingtwo",

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 const Post = (props) => (
   <div>
+    <b>{JSON.stringify(props.post)}</b>
     {props.children}
-    {JSON.stringify(props.post)}
   </div>
 )
 

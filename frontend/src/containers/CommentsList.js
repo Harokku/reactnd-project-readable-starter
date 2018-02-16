@@ -12,15 +12,23 @@ class CommentsList extends Component {
     this.props.postId && this.props.dispatch(fetchCommentsForPost(this.props.postId))
   }
 
+  renderCommentsForPost(comments, postId) {
+    return comments && comments
+      .filter(comment => (
+        comment.parentId === postId
+      ))
+      .map(comment =>
+        <li key={comment.id}>
+          <Comment comment={comment} />
+        </li>
+      )
+  }
+
   render() {
     return (
       <div>
         <ul>
-          {this.props.comments && this.props.comments.map(comment =>
-            <li key={comment.id}>
-              <Comment comment={comment} />
-            </li>
-          )}
+          {this.renderCommentsForPost(this.props.comments, this.props.postId)}
         </ul>
       </div>
     )
