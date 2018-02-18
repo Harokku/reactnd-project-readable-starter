@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { fetchCommentsForPost } from "../actions/comments";
 
+import { Feed } from "semantic-ui-react";
 import Comment from "../components/Comment";
 
 class CommentsList extends Component {
@@ -18,18 +19,16 @@ class CommentsList extends Component {
         comment.parentId === postId
       ))
       .map(comment =>
-        <li key={comment.id}>
-          <Comment comment={comment} />
-        </li>
+        <Comment key={comment.id} comment={comment} />
       )
   }
 
   render() {
     return (
       <div>
-        <ul>
+        <Feed>
           {this.renderCommentsForPost(this.props.comments, this.props.postId)}
-        </ul>
+        </Feed>
       </div>
     )
   }

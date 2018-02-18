@@ -9,7 +9,7 @@ import Category from "../components/Category";
 class CategoriesList extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCategories());
+    this.props.categories.length >0 || this.props.dispatch(fetchCategories());
   }
 
   render() {

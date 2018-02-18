@@ -4,7 +4,7 @@ const comments = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_COMMENTS_FOR_POST:
       return [
-        ...state,
+        ...state.filter(comment => comment.parentId !== action.postId),
         ...action.comments
       ]
     case ADD_COMMENT:

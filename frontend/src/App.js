@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import { Route } from "react-router-dom";
 
-import CategoriesList from "./containers/CategoriesList";
 import PostsList from "./containers/PostsList";
+import CategoriesMenu from "./containers/CategoriesMenu";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <CategoriesList />
-
-        <PostsList />
+        <CategoriesMenu />
+        <Route exact path='/' render={() => (
+          <PostsList />
+        )} />
+        <Route exact path='/posts' render={() => (
+          <div />
+        )} />
       </div>
     );
   }

@@ -13,10 +13,11 @@ export const addComment = (comment) => (
   }
 )
 
-export const receiveCommentsForPost = (comments) => (
+export const receiveCommentsForPost = (comments, postId) => (
   {
     type: RECEIVE_COMMENTS_FOR_POST,
-    comments
+    comments,
+    postId,
   }
 )
 
@@ -30,5 +31,5 @@ export const fetchCommentsForPost = (postId) => (dispatch) => {
     method: 'GET'
   })
   .then(res => res.json())
-  .then(response => dispatch(receiveCommentsForPost(response)))
+  .then(response => dispatch(receiveCommentsForPost(response, postId)))
 }
