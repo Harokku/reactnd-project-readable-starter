@@ -31,3 +31,16 @@ export const fetchAllPosts = () => (dispatch) => {
     .then(res => res.json())
     .then(response => dispatch(receivePosts(response)) )
 }
+
+export const postNewPost = (post) => (dispatch) => {
+  return fetch('http://127.0.0.1:3001/posts', {
+    headers: { 
+      'Authorization': 'ixos-911',
+      'Content-Type': 'application/json',
+     },
+    method: 'POST',
+    body: JSON.stringify(post),
+  })
+  .then(dispatch(addPost(post)))
+  .catch(err => console.log(err))
+}

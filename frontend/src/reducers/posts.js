@@ -7,7 +7,12 @@ const posts = (state = [], action) => {
     case ADD_POST:
       return [
         ...state,
-        action.post
+        {
+          ...action.post,
+          voteScore: 1,
+          deleted: false,
+          commentCount: 0,
+        }
       ]
     default:
       return state
