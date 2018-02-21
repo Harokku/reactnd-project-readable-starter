@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { fetchAllPosts } from "./actions/posts";
 
 import PostsList from "./containers/PostsList";
 import CategoriesMenu from "./containers/CategoriesMenu";
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchAllPosts());
+  }
+
   render() {
     return (
       <div>
@@ -12,12 +20,12 @@ class App extends Component {
         <Route exact path='/' render={() => (
           <PostsList />
         )} />
-        <Route exact path='/posts' render={() => (
-          <div />
+        <Route exact path='/posts/:category' render={(state) => (
+          <PostsList filter={state.match.params.category}/>
         )} />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(connect()(App));

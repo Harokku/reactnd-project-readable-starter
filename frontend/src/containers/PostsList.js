@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { fetchAllPosts, postNewPost } from "../actions/posts";
+import { postNewPost } from "../actions/posts";
 
 import { Card, Dropdown } from "semantic-ui-react";
 
@@ -29,15 +29,7 @@ class PostsList extends Component {
     }
   ]
 
-  componentDidMount() {
-    this.props.dispatch(fetchAllPosts());
-  }
-
   handleSortByChange = (e, { value }) => this.setState({ sortBy: value })
-
-  sortPosts = (orderBy) => (
-    this.props.posts.sort((a, b) => (a[orderBy] - b[orderBy]))
-  )
 
   postNew = (post) => {
     this.props.dispatch(postNewPost(post))
@@ -57,11 +49,22 @@ class PostsList extends Component {
         </span>
 
         <Card.Group>
-          {this.props.posts && this.sortPosts(this.state.sortBy).map(post => (
-            <Post key={post.id} post={post}>
-              {/*<CommentsList postId={post.id} />*/}
-            </Post>
-          ))}
+          {this.props.filter
+            ? this.props.posts
+              .filter(post => post.category === this.props.filter)
+              .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
+              .map(post => (
+                <Post key={post.id} post={post}>
+                  {/*<CommentsList postId={post.id} />*/}
+                </Post>
+              ))
+            : this.props.posts
+              .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
+              .map(post => (
+                <Post key={post.id} post={post}>
+                  {/*<CommentsList postId={post.id} />*/}
+                </Post>
+              ))}
         </Card.Group>
       </div>
     )
@@ -70,7 +73,8 @@ class PostsList extends Component {
 
 PostsList.propTypes = {
   posts: PropTypes.array.isRequired,
-  categories: PropTypes.array.isRequired
+  categories: PropTypes.array.isRequired,
+  filter: PropTypes.string,
 }
 
 const mapCategories = (categories) => (categories.map(category => category.name))
