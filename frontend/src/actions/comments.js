@@ -27,7 +27,7 @@ export const receiveCommentsForPost = (comments, postId) => (
 
 export const fetchCommentsForPost = (postId) => (dispatch) => {
   return fetch(`http://127.0.0.1:3001/posts/${postId}/comments`, {
-    headers: { 'Authorization': 'ixos-911' },
+    headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })
   .then(res => res.json())

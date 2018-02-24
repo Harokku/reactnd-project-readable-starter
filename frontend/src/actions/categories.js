@@ -17,7 +17,7 @@ export const receiveCategories = (categories) => (
 
 export const fetchCategories = () => (dispatch) => {
   return fetch('http://127.0.0.1:3001/categories', {
-    headers: { 'Authorization': 'ixos-911' },
+    headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })
     .then(res => res.json())

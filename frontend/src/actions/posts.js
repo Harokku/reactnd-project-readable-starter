@@ -1,5 +1,11 @@
 export const ADD_POST = 'ADD_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
+export const INCREMENT_POST_VOTE = 'INCREMENT_POST_VOTE'
+export const DECREMENT_POST_VOTE = 'DECREMENT_POST_VOTE'
+const API_VOTE_TYPE = {
+  upVote: 'upVote',
+  downVote: 'downVote',
+}
 
 /********************************/
 // Syncronous Actions Creators
@@ -19,28 +25,65 @@ export const receivePosts = (posts) => (
   }
 )
 
+export const incrementPostVote = (postId) => (
+  {
+    type: INCREMENT_POST_VOTE,
+    postId,
+  }
+)
+
+export const decrementPostVote = (postId) => (
+  {
+    type: DECREMENT_POST_VOTE,
+    postId,
+  }
+)
+
 /********************************/
 // Asyncronous Actions Creators
 /********************************/
 
 export const fetchAllPosts = () => (dispatch) => {
   return fetch('http://127.0.0.1:3001/posts', {
-    headers: { 'Authorization': 'ixos-911' },
+    headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })
     .then(res => res.json())
-    .then(response => dispatch(receivePosts(response)) )
+    .then(response => dispatch(receivePosts(response)))
 }
 
 export const postNewPost = (post) => (dispatch) => {
   return fetch('http://127.0.0.1:3001/posts', {
-    headers: { 
-      'Authorization': 'ixos-911',
+    headers: {
+      'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',
-     },
+    },
     method: 'POST',
     body: JSON.stringify(post),
   })
-  .then(dispatch(addPost(post)))
-  .catch(err => console.log(err))
+    .then(dispatch(addPost(post)))
+    .catch(err => console.log(err))
+}
+
+export const postVotePost = (postId, voteType) => (dispatch) => {
+  return fetch(`http://127.0.0.1:3001/posts/${postId}`, {
+    headers: {
+      'Authorization': process.env.REACT_APP_AUTH_HEADER,
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({option: voteType}),
+  })
+    .then(() => {
+      switch (voteType) {
+        case API_VOTE_TYPE.upVote:
+          return dispatch(incrementPostVote(postId))
+        case API_VOTE_TYPE.downVote:
+          return dispatch(decrementPostVote(postId))
+        default:
+          return
+      }
+    }
+    )
+    .catch(err => console.log(err))
 }

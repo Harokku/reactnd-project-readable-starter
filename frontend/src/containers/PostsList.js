@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { postNewPost } from "../actions/posts";
+import { postNewPost, postVotePost } from "../actions/posts";
 
 import { Card, Dropdown } from "semantic-ui-react";
 
@@ -29,11 +29,11 @@ class PostsList extends Component {
     }
   ]
 
-  handleSortByChange = (e, { value }) => this.setState({ sortBy: value })
+  handleSortByChange = (e, { value }) => this.setState({ sortBy: value });
 
-  postNew = (post) => {
-    this.props.dispatch(postNewPost(post))
-  }
+  handleOnVote = (postId) => (voteType) => this.props.dispatch(postVotePost(postId, voteType));
+
+  postNew = (post) => this.props.dispatch(postNewPost(post));
 
   render() {
     return (
@@ -54,14 +54,14 @@ class PostsList extends Component {
               .filter(post => post.category === this.props.filter)
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
-                <Post key={post.id} post={post}>
+                <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
                   {/*<CommentsList postId={post.id} />*/}
                 </Post>
               ))
             : this.props.posts
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
-                <Post key={post.id} post={post}>
+                <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
                   {/*<CommentsList postId={post.id} />*/}
                 </Post>
               ))}
