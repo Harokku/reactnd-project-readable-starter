@@ -1,4 +1,9 @@
-import { ADD_COMMENT, RECEIVE_COMMENTS_FOR_POST } from "../actions/comments";
+import {
+  ADD_COMMENT,
+  RECEIVE_COMMENTS_FOR_POST,
+  INCREMENT_COMMENT_VOTE,
+  DECREMENT_COMMENT_VOTE
+} from "../actions/comments";
 
 const comments = (state = [], action) => {
   switch (action.type) {
@@ -10,8 +15,31 @@ const comments = (state = [], action) => {
     case ADD_COMMENT:
       return [
         ...state,
-        action.comment
+        {
+          ...action.comment,
+          voteScore: 1,
+          deleted: false,
+          parentDeleted: false,
+        }
       ]
+    case INCREMENT_COMMENT_VOTE:
+      return state.map(comment => (
+        comment.id === action.commentId
+          ? {
+            ...comment,
+            voteScore: comment.voteScore + 1,
+          }
+          : comment
+      ))
+    case DECREMENT_COMMENT_VOTE:
+      return state.map(comment => (
+        comment.id === action.commentId
+          ? {
+            ...comment,
+            voteScore: comment.voteScore - 1,
+          }
+          : comment
+      ))
     default:
       return state
   }

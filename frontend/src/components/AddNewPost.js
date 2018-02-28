@@ -6,12 +6,11 @@ import { Form, Segment, Header, Button } from "semantic-ui-react";
 
 class AddNewPost extends Component {
   state = {
-    id: '',
-    timestamp: '',
     title: '',
     body: '',
     author: '',
     category: '',
+    formValid: false,
   }
 
   getCategoriesOption = (categories) => (
@@ -32,8 +31,6 @@ class AddNewPost extends Component {
   }
 
   handleClearForm = () => this.setState({
-    id: '',
-    timestamp: '',
     title: '',
     body: '',
     author: '',
@@ -43,7 +40,10 @@ class AddNewPost extends Component {
 
   handleAddPost = (e) => {
     const toPost = {
-      ...this.state,
+      title: this.state.title,
+      body: this.state.body,
+      author: this.state.author,
+      category: this.state.category,
       id: v4(),
       timestamp: Date.now(),
     }

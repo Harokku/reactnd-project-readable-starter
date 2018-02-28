@@ -83,7 +83,6 @@ export const postVotePost = (postId, voteType) => (dispatch) => {
         default:
           return
       }
-    }
-    )
+    })
     .catch(err => console.log(err))
 }
