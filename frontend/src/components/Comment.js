@@ -38,6 +38,7 @@ const Comment = (props) => (
 )
 
 Comment.propTypes = {
+  onVote: PropTypes.func.isRequired,
   comment: PropTypes.object.isRequired,
 }
 

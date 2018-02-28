@@ -32,6 +32,11 @@ class PostsList extends Component {
 
   handleSortByChange = (e, { value }) => this.setState({ sortBy: value });
 
+  /** Increment or decrement post vote
+   * Using currying to decouple actual voting component
+   * @param {string} postId - The post to vote for
+   * @param {string} voteType - upVote to increment or downVote to decrement vote score by 1
+   */
   handleOnVote = (postId) => (voteType) => this.props.dispatch(postVotePost(postId, voteType));
 
   postNew = (post) => this.props.dispatch(postNewPost(post));
