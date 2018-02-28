@@ -6,6 +6,7 @@ import { fetchCommentsForPost } from "../actions/comments";
 
 import { Feed } from "semantic-ui-react";
 import Comment from "../components/Comment";
+import CommentsCount from "../components/CommentsCount";
 
 class CommentsList extends Component {
 
@@ -26,15 +27,20 @@ class CommentsList extends Component {
   render() {
     return (
       <div>
-        <Feed>
-          {this.renderCommentsForPost(this.props.comments, this.props.postId)}
-        </Feed>
+        {
+          this.props.countOnly
+            ? <CommentsCount comments={this.props.comments} />
+            : <Feed>
+              {this.renderCommentsForPost(this.props.comments, this.props.postId)}
+            </Feed>
+        }
       </div>
     )
   }
 }
 
 CommentsList.propTypes = {
+  countOnly: PropTypes.bool,
   postId: PropTypes.string.isRequired,
   comments: PropTypes.array,
 }

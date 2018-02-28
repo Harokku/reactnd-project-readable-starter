@@ -8,6 +8,7 @@ import { Card, Dropdown } from "semantic-ui-react";
 
 import Post from "../components/Post";
 import AddNewPost from "../components/AddNewPost";
+import CommentsList from "./CommentsList";
 
 class PostsList extends Component {
   state = {
@@ -55,14 +56,14 @@ class PostsList extends Component {
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
                 <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
-                  {/*<CommentsList postId={post.id} />*/}
+                  <CommentsList postId={post.id} />
                 </Post>
               ))
             : this.props.posts
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
                 <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
-                  {/*<CommentsList postId={post.id} />*/}
+                  <CommentsList postId={post.id} countOnly />
                 </Post>
               ))}
         </Card.Group>
