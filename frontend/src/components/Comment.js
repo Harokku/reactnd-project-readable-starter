@@ -12,7 +12,14 @@ const Comment = (props) => (
     <Feed.Content>
       <Feed.Summary>
         <Popup
-          trigger={<Button color='red' size='mini' circular icon='delete' />}
+          trigger={
+            <Button
+              color='red'
+              size='mini'
+              circular
+              icon='delete'
+              onClick={() => props.onDelete(props.comment.id)} />
+          }
           content='Click to delete comment'
         />
         <Feed.User>{props.comment.author}</Feed.User>
@@ -38,6 +45,7 @@ const Comment = (props) => (
 )
 
 Comment.propTypes = {
+  onDelete: PropTypes.func.isRequired,
   onVote: PropTypes.func.isRequired,
   comment: PropTypes.object.isRequired,
 }

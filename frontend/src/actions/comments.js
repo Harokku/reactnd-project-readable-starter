@@ -2,6 +2,7 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const RECEIVE_COMMENTS_FOR_POST = 'RECEIVE_COMMENTS_FOR_POST'
 export const INCREMENT_COMMENT_VOTE = 'INCREMENT_COMMENT_VOTE'
 export const DECREMENT_COMMENT_VOTE = 'DECREMENT_COMMENT_VOTE'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 const API_VOTE_TYPE = {
   upVote: 'upVote',
   downVote: 'downVote',
@@ -36,6 +37,13 @@ export const incrementCommentVote = (commentId) => (
 export const decrementCommentVote = (commentId) => (
   {
     type: DECREMENT_COMMENT_VOTE,
+    commentId
+  }
+)
+
+export const removeComment = (commentId) => (
+  {
+    type: DELETE_COMMENT,
     commentId
   }
 )
@@ -84,6 +92,21 @@ export const postVoteComment = (commentId, voteType) => (dispatch) => {
         default:
           return
       }
+    })
+    .catch(err => console.log(err))
+}
+
+export const deleteComment = (commentId) => (dispatch) => {
+  return fetch(`http://127.0.0.1:3001/comments/${commentId}`, {
+    headers: {
+      'Authorization': process.env.REACT_APP_AUTH_HEADER,
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+  })
+    .then((res) => res.json())
+    .then(() => {
+      return dispatch(removeComment(commentId))
     })
     .catch(err => console.log(err))
 }

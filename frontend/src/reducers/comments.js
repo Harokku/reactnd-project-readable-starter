@@ -2,7 +2,8 @@ import {
   ADD_COMMENT,
   RECEIVE_COMMENTS_FOR_POST,
   INCREMENT_COMMENT_VOTE,
-  DECREMENT_COMMENT_VOTE
+  DECREMENT_COMMENT_VOTE,
+  DELETE_COMMENT
 } from "../actions/comments";
 
 const comments = (state = [], action) => {
@@ -39,6 +40,10 @@ const comments = (state = [], action) => {
             voteScore: comment.voteScore - 1,
           }
           : comment
+      ))
+    case DELETE_COMMENT:
+      return state.filter(comment => (
+        comment.id !== action.commentId
       ))
     default:
       return state

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { fetchCommentsForPost, postVoteComment, postNewComment } from "../actions/comments";
+import { fetchCommentsForPost, postVoteComment, postNewComment, deleteComment } from "../actions/comments";
 
 import { Feed } from "semantic-ui-react";
 import AddNewComment from "../components/AddNewComment";
@@ -21,20 +21,19 @@ class CommentsList extends Component {
         comment.parentId === postId
       ))
       .map(comment =>
-        <Comment key={comment.id} comment={comment} onVote={this.handleOnVote(comment.id)} />
+        <Comment
+          key={comment.id}
+          comment={comment}
+          onVote={this.handleOnVote(comment.id)}
+          onDelete={this.handleOnDelete} />
       )
   }
 
   handleOnVote = (commentId) => (voteType) => this.props.dispatch(postVoteComment(commentId, voteType));
 
-  postNew = (postId) => (comment) => {
-    console.group('Working item')
-    console.log(postId)
-    console.log(comment)
-    console.info({...comment, parentId: postId})
-    console.groupEnd()
-    this.props.dispatch(postNewComment({...comment, parentId: postId}))
-  }
+  handleOnDelete = (commentId) => this.props.dispatch(deleteComment(commentId));
+
+  postNew = (postId) => (comment) => { this.props.dispatch(postNewComment({ ...comment, parentId: postId })) }
 
   render() {
     return (
@@ -44,7 +43,7 @@ class CommentsList extends Component {
             ? <CommentsCount comments={this.props.comments} />
             : <Feed>
               {this.renderCommentsForPost(this.props.comments, this.props.postId)}
-              <AddNewComment onAddComment={this.postNew(this.props.postId)}/>
+              <AddNewComment onAddComment={this.postNew(this.props.postId)} />
             </Feed>
         }
       </div>
