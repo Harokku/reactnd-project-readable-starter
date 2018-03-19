@@ -6,15 +6,15 @@ import moment from "moment";
 import { Grid, Card } from "semantic-ui-react";
 
 import VoteButton from "./VoteButton";
+import DeleteButton from "./DeleteButton";
 
 const Post = (props) => (
   <Card color='teal'>
     <Card.Content>
       <Card.Header>
-        <Link
-        to={`/posts/detail/${props.post.id}`}
-        >
-        {props.post.title}
+        <DeleteButton popup='Delete post' onDelete={props.onDelete}/>
+        <Link to={`/posts/detail/${props.post.id}`}>
+          {props.post.title}
         </Link>
       </Card.Header>
       <Card.Meta>
@@ -47,6 +47,7 @@ const Post = (props) => (
 )
 
 Post.propTypes = {
+  onDelete: PropTypes.func.isRequired,
   onVote: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
 }

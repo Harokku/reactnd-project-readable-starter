@@ -2,7 +2,8 @@ import {
   ADD_POST,
   RECEIVE_POST,
   INCREMENT_POST_VOTE,
-  DECREMENT_POST_VOTE
+  DECREMENT_POST_VOTE,
+  DELETE_POST
 } from "../actions/posts";
 
 const posts = (state = [], action) => {
@@ -36,6 +37,10 @@ const posts = (state = [], action) => {
             voteScore: post.voteScore - 1,
           }
           : post
+      ))
+    case DELETE_POST:
+      return state.filter(post => (
+        post.id !== action.postId
       ))
     default:
       return state

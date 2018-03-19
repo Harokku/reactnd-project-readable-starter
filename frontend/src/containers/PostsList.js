@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { postNewPost, postVotePost } from "../actions/posts";
+import { postNewPost, postVotePost, deletePost } from "../actions/posts";
 
 import { Card, Dropdown } from "semantic-ui-react";
 
@@ -39,6 +39,8 @@ class PostsList extends Component {
    */
   handleOnVote = (postId) => (voteType) => this.props.dispatch(postVotePost(postId, voteType));
 
+  handleOnDelete = (postId) => () => this.props.dispatch(deletePost(postId))
+
   postNew = (post) => this.props.dispatch(postNewPost(post));
 
   render() {
@@ -60,14 +62,24 @@ class PostsList extends Component {
               .filter(post => post.category === this.props.filter)
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
-                <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
+                <Post
+                  key={post.id}
+                  post={post}
+                  onVote={this.handleOnVote(post.id)}
+                  onDelete={this.handleOnDelete(post.id)}
+                >
                   <CommentsList countOnly postId={post.id} />
                 </Post>
               ))
             : this.props.posts
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
-                <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
+                <Post
+                  key={post.id}
+                  post={post}
+                  onVote={this.handleOnVote(post.id)}
+                  onDelete={this.handleOnDelete(post.id)}
+                >
                   <CommentsList countOnly postId={post.id} />
                 </Post>
               ))}

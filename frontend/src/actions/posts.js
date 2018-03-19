@@ -80,7 +80,7 @@ export const postVotePost = (postId, voteType) => (dispatch) => {
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    body: JSON.stringify({option: voteType}),
+    body: JSON.stringify({ option: voteType }),
   })
     .then(() => {
       switch (voteType) {
@@ -95,7 +95,7 @@ export const postVotePost = (postId, voteType) => (dispatch) => {
     .catch(err => console.log(err))
 }
 
-export const deleteComment = (postId) => (dispatch) => {
+export const deletePost = (postId) => (dispatch) => {
   return fetch(`${process.env.REACT_APP_API_SERVER}/posts/${postId}`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
@@ -103,4 +103,9 @@ export const deleteComment = (postId) => (dispatch) => {
     },
     method: 'DELETE',
   })
+    .then((res) => res.json())
+    .then(() => {
+      return dispatch(removePost(postId))
+    })
+    .catch(err => console.log(err))
 }
