@@ -16,7 +16,7 @@ export const receiveCategories = (categories) => (
 /********************************/
 
 export const fetchCategories = () => (dispatch) => {
-  return fetch('http://127.0.0.1:3001/categories', {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/categories`, {
     headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })

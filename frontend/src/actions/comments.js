@@ -53,7 +53,7 @@ export const removeComment = (commentId) => (
 /********************************/
 
 export const fetchCommentsForPost = (postId) => (dispatch) => {
-  return fetch(`http://127.0.0.1:3001/posts/${postId}/comments`, {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/posts/${postId}/comments`, {
     headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })
@@ -62,7 +62,7 @@ export const fetchCommentsForPost = (postId) => (dispatch) => {
 }
 
 export const postNewComment = (comment) => (dispatch) => {
-  return fetch('http://127.0.0.1:3001/comments', {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/comments`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const postNewComment = (comment) => (dispatch) => {
 }
 
 export const postVoteComment = (commentId, voteType) => (dispatch) => {
-  return fetch(`http://127.0.0.1:3001/comments/${commentId}`, {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/comments/${commentId}`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export const postVoteComment = (commentId, voteType) => (dispatch) => {
 }
 
 export const deleteComment = (commentId) => (dispatch) => {
-  return fetch(`http://127.0.0.1:3001/comments/${commentId}`, {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/comments/${commentId}`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',

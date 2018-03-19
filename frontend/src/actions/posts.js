@@ -2,6 +2,7 @@ export const ADD_POST = 'ADD_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const INCREMENT_POST_VOTE = 'INCREMENT_POST_VOTE'
 export const DECREMENT_POST_VOTE = 'DECREMENT_POST_VOTE'
+export const DELETE_POST = 'DELETE_POST'
 const API_VOTE_TYPE = {
   upVote: 'upVote',
   downVote: 'downVote',
@@ -39,12 +40,19 @@ export const decrementPostVote = (postId) => (
   }
 )
 
+export const removePost = (postId) => (
+  {
+    type: DELETE_POST,
+    postId
+  }
+)
+
 /********************************/
 // Asyncronous Actions Creators
 /********************************/
 
 export const fetchAllPosts = () => (dispatch) => {
-  return fetch('http://127.0.0.1:3001/posts', {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/posts`, {
     headers: { 'Authorization': process.env.REACT_APP_AUTH_HEADER },
     method: 'GET'
   })
@@ -53,7 +61,7 @@ export const fetchAllPosts = () => (dispatch) => {
 }
 
 export const postNewPost = (post) => (dispatch) => {
-  return fetch('http://127.0.0.1:3001/posts', {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/posts`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',
@@ -66,7 +74,7 @@ export const postNewPost = (post) => (dispatch) => {
 }
 
 export const postVotePost = (postId, voteType) => (dispatch) => {
-  return fetch(`http://127.0.0.1:3001/posts/${postId}`, {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/posts/${postId}`, {
     headers: {
       'Authorization': process.env.REACT_APP_AUTH_HEADER,
       'Content-Type': 'application/json',
@@ -85,4 +93,14 @@ export const postVotePost = (postId, voteType) => (dispatch) => {
       }
     })
     .catch(err => console.log(err))
+}
+
+export const deleteComment = (postId) => (dispatch) => {
+  return fetch(`${process.env.REACT_APP_API_SERVER}/posts/${postId}`, {
+    headers: {
+      'Authorization': process.env.REACT_APP_AUTH_HEADER,
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+  })
 }

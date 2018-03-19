@@ -61,14 +61,14 @@ class PostsList extends Component {
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
                 <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
-                  <CommentsList postId={post.id} />
+                  <CommentsList countOnly postId={post.id} />
                 </Post>
               ))
             : this.props.posts
               .sort((a, b) => (a[this.state.sortBy] - b[this.state.sortBy]))
               .map(post => (
                 <Post key={post.id} post={post} onVote={this.handleOnVote(post.id)}>
-                  <CommentsList postId={post.id} />
+                  <CommentsList countOnly postId={post.id} />
                 </Post>
               ))}
         </Card.Group>

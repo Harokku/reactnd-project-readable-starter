@@ -25,13 +25,13 @@ class CommentsList extends Component {
           key={comment.id}
           comment={comment}
           onVote={this.handleOnVote(comment.id)}
-          onDelete={this.handleOnDelete} />
+          onDelete={this.handleOnDelete(comment.id)} />
       )
   }
 
   handleOnVote = (commentId) => (voteType) => this.props.dispatch(postVoteComment(commentId, voteType));
 
-  handleOnDelete = (commentId) => this.props.dispatch(deleteComment(commentId));
+  handleOnDelete = (commentId) => () => this.props.dispatch(deleteComment(commentId));
 
   postNew = (postId) => (comment) => { this.props.dispatch(postNewComment({ ...comment, parentId: postId })) }
 
@@ -40,7 +40,7 @@ class CommentsList extends Component {
       <div>
         {
           this.props.countOnly
-            ? <CommentsCount comments={this.props.comments} />
+            ? <CommentsCount comments={this.props.comments.filter(comment => comment.parentId === this.props.postId)} />
             : <Feed>
               {this.renderCommentsForPost(this.props.comments, this.props.postId)}
               <AddNewComment onAddComment={this.postNew(this.props.postId)} />

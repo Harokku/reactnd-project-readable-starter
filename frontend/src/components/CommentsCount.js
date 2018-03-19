@@ -8,8 +8,8 @@ const CommentsCount = (props) => (
     <Statistic.Label>Number of comments</Statistic.Label>
     <Statistic.Value>
       <Icon name='comments outline' />
-      5
-      </Statistic.Value>
+      {props.comments.length}
+    </Statistic.Value>
   </Statistic>
 )
 

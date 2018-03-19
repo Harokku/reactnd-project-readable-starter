@@ -28,7 +28,7 @@ class CategoriesMenu extends Component {
           <Menu.Item
             exact
             as={NavLink}
-            to={'/posts/' + category.path}
+            to={'/posts/category/' + category.path}
             key={index}
             name={category.path}
           >

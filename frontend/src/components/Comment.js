@@ -2,26 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-import { Popup, Button, Grid, Feed } from "semantic-ui-react";
+import { Grid, Feed } from "semantic-ui-react";
 
 import VoteButton from "../components/VoteButton";
+import DeleteButton from "../components/DeleteButton";
 
 const Comment = (props) => (
   <Feed.Event>
     <Feed.Label icon='comment' />
     <Feed.Content>
       <Feed.Summary>
-        <Popup
-          trigger={
-            <Button
-              color='red'
-              size='mini'
-              circular
-              icon='delete'
-              onClick={() => props.onDelete(props.comment.id)} />
-          }
-          content='Click to delete comment'
-        />
+        <DeleteButton popup='Delete comment' onDelete={props.onDelete} />
         <Feed.User>{props.comment.author}</Feed.User>
         <Feed.Date>{moment(props.comment.timestamp).format('Do MMM YYYY')}</Feed.Date>
       </Feed.Summary>
